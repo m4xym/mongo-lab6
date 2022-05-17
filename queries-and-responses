@@ -1,0 +1,98 @@
+Встановлення посилань
+
+> Bloodborne = db.games.insertOne({title:"Bloodborne", genre:["rpg", "souls-like", "fantasy"], developer:"From Software",
+... platform:["PS4", "PS5"], releaseDate:{month:"mar", day:25, year:2015}, rating:{metascore:92, userScore:8.9}})
+{
+        "acknowledged" : true,
+        "insertedId" : ObjectId("62842458e1eb257872246c29")
+}
+
+> Sara = ({name: "Sara", age: 20, game: {"$ref" : "games", "$id" : Bloodborne.insertedId}})
+{
+        "name" : "Sara",
+        "age" : 20,
+        "game" : {
+                "$ref" : "games",
+                "$id" : ObjectId("62842458e1eb257872246c29")
+        }
+}
+
+> db.gamers.insert(Sara)
+WriteResult({ "nInserted" : 1 })
+
+> db.games.findOne({_id: Sara.game.$id})
+{
+        "_id" : ObjectId("62842458e1eb257872246c29"),
+        "title" : "Bloodborne",
+        "genre" : [
+                "rpg",
+                "souls-like",
+                "fantasy"
+        ],
+        "developer" : "From Software",
+        "platform" : [
+                "PS4",
+                "PS5"
+        ],
+        "releaseDate" : {
+                "month" : "mar",
+                "day" : 25,
+                "year" : 2015
+        },
+        "rating" : {
+                "metascore" : 92,
+                "userScore" : 8.9
+        }
+}
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
+> MassEffect = db.games.insertOne({title:"Mass Effect", genre:["rpg", "Shooter", "Sci-Fi"], developer:"Bioware",
+... platform:["PC", "Xbox", "PS4", "PS5"], releaseDate:{month:"may", day:28, year:2008}, rating:{metascore:89, userScore:8.6}})
+{
+        "acknowledged" : true,
+        "insertedId" : ObjectId("628427b4e1eb257872246c2e")
+}
+
+> Bioware = ({name: "Bioware", year: 1995, games: {"$ref" : "games", "$id" : MassEffect.insertedId}})
+{
+        "name" : "Bioware",
+        "year" : 1995,
+        "games" : {
+                "$ref" : "games",
+                "$id" : ObjectId("628427b4e1eb257872246c2e")
+        }
+}
+
+> db.developers.insertOne(Bioware)
+{
+        "acknowledged" : true,
+        "insertedId" : ObjectId("62842800e1eb257872246c2f")
+}
+
+> db.games.findOne({_id: Bioware.games.$id})
+{
+        "_id" : ObjectId("628427b4e1eb257872246c2e"),
+        "title" : "Mass Effect",
+        "genre" : [
+                "rpg",
+                "Shooter",
+                "Sci-Fi"
+        ],
+        "developer" : "Bioware",
+        "platform" : [
+                "PC",
+                "Xbox",
+                "PS4",
+                "PS5"
+        ],
+        "releaseDate" : {
+                "month" : "may",
+                "day" : 28,
+                "year" : 2008
+        },
+        "rating" : {
+                "metascore" : 89,
+                "userScore" : 8.6
+        }
+}
